@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    <meta name="viewport" content="width=device-width, intial-scale=1">
+    <script src="./node_modules/jquery/dist/jquery.min.js"  onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./node_modules./angular./angular.min.js"></script>
+    <script src="./node_modules/angular-route/angular-route.min.js"></script>
+    <script src='./js/form-validate.js'></script>
+    
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/ionicons-npm/css/ionicons.min.css">
+    <script>
+    </script>
+    <style>
+        .panel-primary
+        {
+            color: black;
+        }
+        html
+        {
+            position: relative;
+            min-height: 100%;
+        }
+        #alert
+        {
+            display: inline-block;
+            position: absolute;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+    <title>Login</title>
+<body>
+    <div class="container">
+        <div class="row">
+                <div class="col-xs-5 col-lg-offset-1" style="margin-top:120px">
+                    <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color:#666666;border-color:#666666;border-width:5px;">
+                        <h4 align="center" style="font-weight:bolder;font-size:25px;color:	#d9d9d9;">Login</h4>
+                    </div>
+
+                    <div class="panel-body" style="border-color:#666666;">
+                        <form class="form-horizontal">
+                        <div class="form-group">
+                        <div class="input-group col-sm-10 col-sm-offset-4 col-sm-offset-3 col-xs-offset-1 col-lg-offset-4">
+                            <img src="./Img/loginimg.png" class="img-responsive" width="150px" height="150px">
+                            </div>
+                        </div>
+                        
+                        <div id="st1" class="form-group">
+                        <label style="margin-top: 7px;" for="uname" class="col-sm-3 col-sm-offset-1">Email </label>
+                            <div class="input-group col-sm-7">
+                            <span class="input-group-addon"><i class="ion-person"></i></span>
+                            <input type="text" value=""  placeholder="Login Username" class="form-control" id="uname">
+                            </div>
+                        </div>
+                        
+                        <div id="st2" class="form-group">
+                        <label style="margin-top: 7px;" for="pass" class="col-sm-3 col-sm-offset-1">Password </label>
+                        <div class="input-group col-sm-7">
+                            <span class="input-group-addon"><i class=" ion-locked"></i></span>
+                            <input type="password" value="" placeholder="Login Password" class="form-control" id="passwd">
+                            <span class="input-group-addon"><i style="text-decoration:none;font-size:20px;color:#666666;" id="shpw" class="ion-eye-disabled"></i></span>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="input-group col-sm-7 col-sm-offset-4">
+                            <input type="button" id="Submit" class="btn btn-default btn-md" style="width:100px;" name="submit" value="Login ">
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                    </div>
+                    <div id="alert" class="alert alert-danger hidden">
+                        <strong>!error</strong> Email Or Password Does Not Matched!! Please Try Again
+                    </div>
+                </div>
+        </div>
+    </div>
+    <script src="./js/Navfooter.js"></script>
+</body>
+</head>
+</html>

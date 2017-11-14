@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, intial-scale=1">
+  <script src="./node_modules/jquery/dist/jquery.min.js"  onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src='./js/form-validate.js'></script>
+  <script src='./js/return_book.js'></script>
+  <script src='./node_modules/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
+
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./node_modules/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="./node_modules/ionicons-npm/css/ionicons.min.css">
+
+
+  <title>Renew Or Submit Books</title>
+  <style>
+    .menu
+    {
+      background-color: #222;
+      margin-left: 20px;
+      width :170px;
+    }
+    .navfont
+    {
+      font-size: 16px;
+    }
+    h2
+    {
+      font-weight: bolder;
+      font-size: 40px;
+      margin-top: 3px;
+      color: #808080;
+    }
+    #alert
+    {
+        margin-top: 0px;
+        width: 420px;
+    }
+    .jumbotron
+    {
+      margin-top: 80px;
+      background-color:#808080;
+      margin-left: 100px;
+      opacity: 0.6;
+    }
+    .main
+    {
+        margin:10px;
+        padding: 10px;
+    }
+    .panel
+    {
+        padding: 10px;
+    }
+    .fixed-panel 
+    {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+    tr:after 
+    {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+    #headdel > span,#delrec > span
+    {
+        display:inline-block;
+        width:70px;
+    }
+    .btn-group > .btn
+    {
+        width: 270px;
+    }
+    .form-group
+    {
+        margin-bottom: 0px;
+    }
+    .btn-group btn
+    {
+        width: 285px;
+    }
+    i
+    {
+        font-size: 18px;
+    }
+    .stdcrs .btn
+    {
+        width: 150px;
+    }
+    .upclass 
+    {
+        margin-top: 15px;
+    }
+    .renew > .form-group
+    {
+        margin-top: 15px;
+    }
+    #btnday > .btn
+    {
+        width:80px;
+        margin-left: 15px;
+        border-radius:10px;
+    }
+    .btn-danger.active
+    {
+        background-color: #5cb85c;
+        border-color: #5cb85c;
+    }
+  </style>
+</head>
+<body >
+    <script src="./js/Navheader.js"></script>
+    <div class="main">
+            <div class="row">
+                <div class="col-xs-9 col-lg-9 col-md-9 col-sm-9 col-xs-offset-1 col-lg-offset-1 col-md-offset-1 col-sm-offset-1" style="margin-top:0px">
+                    <div class="panel panel-default" style="box-shadow:5px 5px 5px rgba(0, 0, 0, 0.562)">
+                        <div class="panel-heading" style="height:55px;">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group" style="margin-top:0px;">
+                                        <div class="input-group" style="width:1px;">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <select id="stdyear" data-size="8" data-dropup-auto="false" class="selectpicker">
+                                                    <option value='none' selected>Display All</option>
+                                                    <option value='bid'>By Book Id</option>
+                                                    <option value='lid'>By Library Name</option>
+                                                    <option value='sub'>Submited</option>
+                                                    <option value='ren'>Renewed</option>
+                                                    <option value='toren'>Need To Be Renew</option>
+                                                    <option value='mead'>Me Added</option>
+                                            </select>
+                                        </div>                               
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div id="srcid" class="input-group hidden">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <span class="input-group-addon">B</span>
+                                            <input id="srbid" style="width:250px;" type="text" placeholder="Search By Book Id" class="form-control" >
+                                        </div>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <div id="srclid" class="input-group hidden">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <input id="srlid" style="width:250px;" type="text" placeholder="Search By Library Id" class="form-control" >
+                                        </div>                               
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding-bottom:0px;max-height:450px;min-height: 450px;">
+                            <div class="table-responsive">
+                                <table class="table table-striped" style="width: 100%;">
+                                    <thead>
+                                        <tr style="font-size:16px;background-color:rgba(0, 0, 0, 0.500);border-bottom:none;">
+                                            <th style='float: left;width: 11%;'>Issue Id</th>
+                                            <th style='float: left;width: 12.5%;'>Issued By</th>
+                                            <th style='float: left;width: 11%;'>Book Id</th>
+                                            <th style='float: left;width: 12%;'>Library Id</th>
+                                            <th style='float: left;width: 13.6%;'>Issue Date</th>
+                                            <th style='float: left;width: 13.6%;'>Renew Date</th>
+                                            <th style='float: left;width: 16%;'>Pnlty_Lt_Sub</th>
+                                            <th style='float: left;width: 10.3%;'>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="data" style="height: 365px;overflow-y: auto;display:block;">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+
+                <div id="myModalresub" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                                <div class="modal-body"><center>
+                                    <button id="btnrenew" type="button" class="btn btn-success" onclick="renew()" data-dismiss="modal">Renew</button>
+                                    <button id="btnsubmit" type="button" class="btn btn-danger" onclick="sub()" data-dismiss="modal">Submit</button>
+                                </center></div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div id="myModalrenew" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content" style="width:600px;">
+                                <div class="modal-header">
+                                    <h3 align="center">Renew Or Submit The Book</h3>
+                                </div>
+                                <div class="modal-body renew">
+                                    <div id="rnw" class="renew">
+                                    <div class="form-group">
+                                        <label style="margin-top: 7px;" for="iid" class="col-sm-4 col-sm-offset-1">Issue Id </label>
+                                        <div class="input-group col-sm-6 disabled">
+                                            <span class="input-group-addon"><i class="ion-person"></i></span>
+                                            <input type="text" value="" class="form-control" id="iid" disabled>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="form-group">
+                                        <label style="margin-top: 7px;" for="bid" class="col-sm-4 col-sm-offset-1">Book Id </label>
+                                        <div class="input-group col-sm-6 disabled">
+                                                <span class="input-group-addon"><i class="ion-ios-book"></i></span>
+                                            <input id="bid" type="text" value="" placeholder="Select Book Id" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="form-group">
+                                        <label style="margin-top: 7px;" for="sid" class="col-sm-4 col-sm-offset-1">Student Id </label>
+                                        <div class="input-group col-sm-6">
+                                            <span class="input-group-addon"><i class="ion-person"></i></span>
+                                            <input id="lid" type="text" placeholder="Select Library Id" value="" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="form-group">
+                                        <label style="margin-top: 7px;" for="idate" class="col-sm-4 col-sm-offset-1">Issue Date </label>
+                                        <div class="input-group col-sm-6">
+                                            <span class="input-group-addon"><i style="font-size:10px" class="ion-calendar"></i></span>
+                                            <input id="idate" type="text" placeholder="DD/MM/YYYY" value="" class="form-control" disabled>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label style="margin-top: 7px;" for="rdate" class="col-sm-4 col-sm-offset-1">Renew Date </label>
+                                        <div class="input-group col-sm-6">
+                                            <span class="input-group-addon"><i style="font-size:10px" class="ion-calendar"></i></span>
+                                            <input id="rdate" type="text" placeholder="DD/MM/YYYY" value="" class="form-control" style="height:48px;"  disabled>
+                                            <span class="input-group-addon"><input id="btnchng" type="button" class="btn btn-danger btn-md" style="width:100px;" value="Change"></span>
+                                        </div>
+                                    </div>
+                    
+                                    <div class="form-group">
+                                        <div class="input-group col-sm-6 col-sm-offset-5">
+                                                <button id="btnrenew" type="button" class="btn btn-success" onclick="renew()" style="width:100px;">Renew</button>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="input-group col-sm-2 col-sm-offset-5">
+                                                <h4 style="margin-left:15px;" align="center">OR</h4>
+                                        </div>
+                                    </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label style="margin-top: 7px;" for="pnlt" class="col-sm-4 col-sm-offset-1">Panelty To Pay </label>
+                                        <div class="input-group col-sm-6">
+                                            <span class="input-group-addon"><b>&#x20B9;</b></span>
+                                            <input id="pnlt" type="text"  value="" class="form-control" style="height:48px;" disabled>
+                                            <span class="input-group-addon"><button id="btnsubmit" type="button" class="btn btn-danger" onclick="sub()" style="width:100px;">Submit</button></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="" type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+    
+                <div id="myModalchange" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div id="btncls" class="modal-body">
+                                        <div id="btnday" style="display:flex;" class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="day" value="5">5 Days
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="day" value="10">10 Days
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="day" value="15">15 Days
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="day" value="20">20 Days
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="day" value="25">25 Days
+                                            </label>
+                                            <label class="btn btn-danger">
+                                                <input type="radio" name="day" value="30">30 Days
+                                            </label>
+                                        </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="myModalerr" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                            <div class="modal-dialog modal-xs" style="width:480px;">
+                                <div class="modal-content">
+                                    <div id="alert1" class="modal-body alert">
+                                        <span id="alert"><h4 align="center"><span id="errmsg" style="width: 429px;display: inline-block;">Renew Date Is Not Valid!!</span></h4></span>
+                                    </div>
+                                    <div class="modal-footer" style="padding:7px;">    
+                                        <button onclick="success()" type="button" style="width:100px;" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+            </div>
+        </form>
+    </div>
+</div>
+    <script src="./js/Navfooter.js"></script>
+</body>
+</html>

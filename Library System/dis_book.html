@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, intial-scale=1">
+  <script src="./node_modules/jquery/dist/jquery.min.js"  onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src='./js/form-validate.js'></script>
+  <script src='./js/dis_allbook.js'></script>
+  <script src='./node_modules/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
+
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./node_modules/bootstrap-select/dist/css/bootstrap-select.min.css">
+  <link rel="stylesheet" href="./node_modules/ionicons-npm/css/ionicons.min.css">
+
+
+  <title>Display All Book</title>
+  <style>
+    .menu
+    {
+      background-color: #222;
+      margin-left: 20px;
+      width :170px;
+    }
+    .navfont
+    {
+      font-size: 16px;
+    }
+    h2
+    {
+      font-weight: bolder;
+      font-size: 40px;
+      margin-top: 3px;
+      color: #808080;
+    }
+    #alert
+    {
+        margin-top: 0px;
+        width: 420px;
+    }
+    .jumbotron
+    {
+      margin-top: 80px;
+      background-color:#808080;
+      margin-left: 100px;
+      opacity: 0.6;
+    }
+    .main
+    {
+        margin:10px;
+        padding: 10px;
+    }
+    .panel
+    {
+        padding: 10px;
+    }
+    .fixed-panel 
+    {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+    tr:after 
+    {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+    #headdel > span,#delrec > span
+    {
+        display:inline-block;
+        width:70px;
+    }
+    .btn-group > .btn
+    {
+        width: 270px;
+    }
+    .form-group
+    {
+        margin-bottom: 0px;
+    }
+    .btn-group btn
+    {
+        width: 285px;
+    }
+    i
+    {
+        font-size: 18px;
+    }
+    .stdcrs .btn
+    {
+        width: 150px;
+    }
+    .upclass 
+    {
+        margin-top: 15px;
+    }
+  </style>
+</head>
+<body >
+    <script src="./js/Navheader.js"></script>
+    <div class="main">
+            <div class="row">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="margin-top:0px">
+                    <div class="panel panel-default" style="box-shadow:5px 5px 5px rgba(0, 0, 0, 0.562)">
+                        <div class="panel-heading" style="height:55px;">
+                            <div class="row">
+                                <div class="col-sm-4 col-md-4 col-lg-4">
+                                    <div class="form-group" style="margin-top:0px;">
+                                        <div class="input-group" style="width:1px;">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <select id="stdyear" data-size="8" data-dropup-auto="false" class="selectpicker">
+                                                    <option value='none' selected>Display All</option>
+                                                    <option value='lid'>By Book Id</option>
+                                                    <option value='name'>By Book Name</option>
+                                                    <option value='valid'>By Book Auther</option>
+                                                    <option value='yrdgre'>By Year, Degree, Semester, Division</option>
+                                                    <option value='block'>Block Books</option>
+                                                    <option value='unblock'>Unblock Books</option>
+                                                    <option value='meadrec'>Me Added Books</option>
+                                            </select>
+                                        </div>                               
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div id="srcid" class="input-group hidden">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <span class="input-group-addon">B</span>
+                                            <input id="srcbid" style="width:250px;" type="text" placeholder="Search By Book Id" class="form-control" >
+                                        </div>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <div id="srcsname" class="input-group hidden">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <input id="srcbname" style="width:250px;" type="text" placeholder="Search By Book Name" class="form-control">
+                                        </div>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <div id="srcvalid" class="input-group hidden">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <input id="srcathname" style="width:250px;" type="text" placeholder="Search By Book Auther Name" class="form-control">
+                                        </div>                               
+                                    </div>
+                                    <div class="form-group">
+                                        <div id="srcycd" class="stdcrs input-group col-sm-3 hidden">
+                                            <select id="srcyrr" data-size="5" data-dropup-auto="false" class="srcyrr selectpicker" data-live-search="true">
+                                                    <option value='none'>Select Year</option>
+                                                    <option value='FY'>First Year</option>                          
+                                                    <option value='SY'>Second Year</option>
+                                                    <option value='TY'>Third Year</option>
+                                            </select>
+                                            <select id="srclist" data-size="5" data-dropup-auto="false" class="srclist selectpicker" data-live-search="true">
+                                                    <option value='none'>Select Course</option><option value='BA'>BA</option><option value='BBA'>BBA</option>
+                                                    <option value='BCA'>BCA</option><option value='BCOM'>BCOM</option>
+                                                    <option value='BED'>BED</option><option value='BHMS'>BHMS</option>
+                                                    <option value='BID'>BID</option><option value='BRC'>BRC</option>
+                                                    <option value='BSC'>BSC</option><option value='BSW'>BSW</option>
+                                                    <option value='LLB'>LLB</option><option value='LLM'>LLM</option>
+                                                    <option value='MA'>MA</option><option value='MBA'>MBA</option>
+                                                    <option value='MBBS'>MBBS</option><option value='MCA'>MCA</option>
+                                                    <option value='MCOM'>MCOM</option><option value='MED'>MED</option>
+                                                    <option value= 'MHRD'>MHRD</option><option value='MLW'>MLW</option>
+                                                    <option value='MRS'>MRS</option><option value='MSC'>MSC</option>
+                                                    <option value='MSW'>MSW</option><option value='OPTO'>OPTO</option>
+                                                    <option value='PGDITM'>PGDITM</option><option value='PGDMLT'>PGDMLT</option>
+                                            </select>
+                                            <select id="srcsem" data-size="5" data-dropup-auto="false" class="srcsem selectpicker" data-live-search="true">
+                                                    <option value='none'>Select Semester</option>
+                                                    <option value='1'>1</option><option value='2'>2</option>
+                                                    <option value='3'>3</option><option value='4'>4</option>
+                                                    <option value='5'>5</option><option value='6'>6</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding-bottom:0px;max-height:450px;min-height: 450px;">
+                            <div class="table-responsive">
+                                <table class="table table-striped" style="width: 100%;">
+                                    <thead>
+                                        <tr style="font-size:16px;background-color:rgba(0, 0, 0, 0.500);border-bottom:none;">
+                                            <th style='float: left;width: 6.4%;'>Book Id</th>
+                                            <th style='float: left;width: 12%;'>Book Name</th>
+                                            <th style='float: left;width: 12%;'>Department</th>
+                                            <th style='float: left;width: 7.5%;'>Semester</th>
+                                            <th style='float: left;width: 11%;'>Book Auther</th>
+                                            <th style='float: left;width: 9.4%;'>Book Price</th>
+                                            <th style='float: left;width: 11.8%;'>Book Quantity</th>
+                                            <th style='float: left;width: 12%;'>Panelty Per Day</th>
+                                            <th style='float: left;width: 17.9%;'><center>Action</center></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="data" style="height: 365px;overflow-y: auto;display:block;">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div id="myModalchange" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h4 align="center">Update Book Record</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form id=modal-form"" class="form-horizontal">
+                                    <div class="form-group upclass">
+                                        <label style="margin-top: 7px;" for="bid" class="col-sm-4 col-sm-offset-1">Book Id </label>
+                                        <div class="input-group col-sm-6 disabled">
+                                            <span class="input-group-addon"><i class="ion-person"></i></span>
+                                            <input type="text" value="" class="form-control" id="bid" disabled>
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group upclass">
+                                        <label style="margin-top: 7px;" for="bname" class="col-sm-4 col-sm-offset-1">Book Name </label>
+                                        <div class="input-group col-sm-6">
+                                            <span class="input-group-addon"><i class="ion-person"></i></span>
+                                            <input id="bname" type="text" placeholder="Enter Book Name" value="" class="form-control">
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group upclass" style="margin-bottom:10px;">
+                                        <label style="margin-top: 7px;" for="std" class="col-sm-4 col-sm-offset-1">Year </label>
+                                            <div class="stdcrs input-group col-sm-3">
+                                                <input style="width:110px;" id="byear" type="text" placeholder="" value="" class="form-control"  disabled>
+                                                <span class="input-group-addon"><i class="ion-university"></i></span>
+                                                <select id="stdyrr" data-size="5" data-dropup-auto="false" class="selectpicker" data-live-search="true">
+                                                        <option value='FY'>First Year</option>                          
+                                                        <option value='SY'>Second Year</option>
+                                                        <option value='TY'>Third Year</option>
+                                                </select>
+                                            </div>
+                                        
+                                    </div>
+        
+                                    <div class="form-group upclass" style="margin-bottom:10px;">
+                                        <label style="margin-top: 7px;" for="std" class="col-sm-4 col-sm-offset-1">Semester </label>
+                                        <div class="input-group col-sm-6">
+                                            <div id="divsem">
+                                                <label class="radio-inline"><input type="radio" value="1" id="sem1" name="stdsem" checked><span id="stdsem1">Sem 1</span></label>
+                                                <label class="radio-inline"><input type="radio" value="2" id="sem2" name="stdsem"><span id="stdsem2">Sem 2</span></label>
+                                            </div>
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group upclass" style="margin-bottom:10px;">
+                                        <label style="margin-top: 7px;" for="std" class="col-sm-4 col-sm-offset-1">Standerd </label>
+                                        <div class="stdcrs input-group col-sm-6">
+                                            <input style="width:110px;" id="bcourse" type="text" placeholder="" value="" class="form-control"  disabled>
+                                            <span class="input-group-addon"><i class="ion-university"></i></span>
+                                            <select id="stdlist" data-size="5" data-dropup-auto="false" class="selectpicker" data-live-search="true">
+                                                    <option value='BA'>BA</option><option value='BBA'>BBA</option>
+                                                    <option value='BCA'>BCA</option><option value='BCOM'>BCOM</option>
+                                                    <option value='BED'>BED</option><option value='BHMS'>BHMS</option>
+                                                    <option value='BID'>BID</option><option value='BRC'>BRC</option>
+                                                    <option value='BSC'>BSC</option><option value='BSW'>BSW</option>
+                                                    <option value='LLB'>LLB</option><option value='LLM'>LLM</option>
+                                                    <option value='MA'>MA</option><option value='MBA'>MBA</option>
+                                                    <option value='MBBS'>MBBS</option><option value='MCA'>MCA</option>
+                                                    <option value='MCOM'>MCOM</option><option value='MED'>MED</option>
+                                                    <option value= 'MHRD'>MHRD</option><option value='MLW'>MLW</option>
+                                                    <option value='MRS'>MRS</option><option value='MSC'>MSC</option>
+                                                    <option value='MSW'>MSW</option><option value='OPTO'>OPTO</option>
+                                                    <option value='PGDITM'>PGDITM</option><option value='PGDMLT'>PGDMLT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group upclass">
+                                        <label style="margin-top: 7px;" for="auth" class="col-sm-4 col-sm-offset-1">Auther </label>
+                                        <div class="input-group col-sm-6">
+                                            <span class="input-group-addon"><i class="ion-person"></i></span>
+                                            <input id="auth" type="text" value="" class="form-control" placeholder="Enter Auther Name" >
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group upclass">
+                                        <label style="margin-top: 7px;" for="cont" class="col-sm-4 col-sm-offset-1">Price : Quantity</label>
+                                        <div id="prcqtyerr" class="input-group col-sm-6">
+                                            <span class="input-group-addon"><b>&#x20B9;</b></span>
+                                            <input id="prc" type="text" style="width:122px;" placeholder="Price" value="" class="form-control" >
+        
+                                            <span class="input-group-addon"><b>Q.</b></span>
+                                            <input id="qty" type="text" style="width:110px;" placeholder="Quantity" value="" class="form-control" >
+                                        </div>
+                                    </div>
+        
+                                    <div class="form-group upclass">
+                                        <label style="margin-top: 7px;" for="cont" class="col-sm-4 col-sm-offset-1">Panelty Price </label>
+                                        <div id="pnlterr" class="input-group col-sm-6">
+                                            <span class="input-group-addon"><b>&#x20B9;</b></span>
+                                            <input id="pnlty" type="text" placeholder="Penalty Per Day" value="" class="form-control" >
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group upclass" style="margin-bottom:10px;">
+                                        <div class="input-group col-sm-6 col-sm-offset-5">
+                                            <input type="button" class="btn btn-primary btn-md" onclick="return validate()" style="width:100px;" value="Update">
+                                        </div>
+                                    </div>    
+                                    </form>
+                                </div>
+                                <div class="modal-footer" style="padding:7px;">    
+                                    <button type="button" style="width:100px;" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+                <div id="myModalerr" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog modal-xs" style="width:480px;">
+                            <div class="modal-content">
+                                <div class="modal-body alert alert-danger">
+                                    <span id="alert"><h4 align="center"><span id="errmsg" style="width: 429px;display: inline-block;">  Email Or Password Does Not Matched!!</span></h4></span>
+                                </div>
+                                <div class="modal-footer" style="padding:7px;">    
+                                    <button type="button" style="width:100px;" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div id="myModalup" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div id="updeldiv">
+                                    
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button id="upsuccess" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="myModaldel" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                                <div class="modal-body">
+                                    <div id="delrec">
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="delsucces" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                                    <button id="" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <hidden id="deloid" value=""></hidden>
+                <hidden id="delosts" value=""></hidden>
+            </div>
+        </form>
+    </div>
+</div>
+    <script src="./js/Navfooter.js"></script>
+</body>
+</html>

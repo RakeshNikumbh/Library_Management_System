@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta name="viewport" content="width=device-width, intial-scale=1">
+  <script src="./node_modules/jquery/dist/jquery.min.js"  onload="window.$ = window.jQuery = module.exports;"></script>
+  <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+  <script src='./js/form-validate.js'></script>
+  <script src='./js/dis_subadmin.js'></script>
+  <script src='./js/datepicker.min.js'></script>
+  <script src='./node_modules/bootstrap-select/dist/js/bootstrap-select.min.js'></script>
+  
+  <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/datepicker.css">
+  <link rel="stylesheet" href="./node_modules/ionicons-npm/css/ionicons.min.css">
+  <link rel="stylesheet" href="./node_modules/bootstrap-select/dist/css/bootstrap-select.min.css">
+
+
+  <title>Add Sub Admin</title>
+  <style>
+    .menu
+    {
+      background-color: #222;
+      margin-left: 20px;
+      width :170px;
+    }
+    .navfont
+    {
+      font-size: 16px;
+    }
+    h2
+    {
+      font-weight: bolder;
+      font-size: 40px;
+      margin-top: 3px;
+      color: #808080;
+    }
+    #alert
+    {
+        margin-top: 0px;
+        width: 420px;
+    }
+    .jumbotron
+    {
+      margin-top: 80px;
+      background-color:#808080;
+      margin-left: 100px;
+      opacity: 0.6;
+    }
+    .main
+    {
+        margin:10px;
+        padding: 10px;
+    }
+    .panel
+    {
+        padding: 10px;
+    }
+    .fixed-panel 
+    {
+        max-height: 450px;
+        overflow-y: scroll;
+    }
+    tr:after 
+    {
+        content: ' ';
+        display: block;
+        visibility: hidden;
+        clear: both;
+    }
+    #headdel > span,#delrec > span
+    {
+        display:inline-block;
+        width:70px;
+    }
+    .btn-group .btn
+    {
+        width: 172px;
+    }
+  </style>
+</head>
+<body >
+    <script src="./js/Navheader.js"></script>
+    <div class="main">
+            <div class="row">
+                <div class="col-xs-12 col-lg-12 col-md-12 col-sm-12" style="margin-top:0px">
+                    <div class="panel panel-default" style="box-shadow:5px 5px 5px rgba(0, 0, 0, 0.562)">
+                        <div class="panel-heading panel-refresh" style="height:55px;">
+                            <div class="row">
+                                <div class="col-sm-2 col-md-2 col-lg-2">
+                                    <div class="form-group">
+                                        <div class="input-group">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <select id="stdyear" data-size="6" data-dropup-auto="false" class="selectpicker">
+                                                    <option value='sid' selected>By Sub Admin Id</option>                          
+                                                    <option value='sname'>By Sub Admin Name</option>
+                                                    <option value='block'>Block Record</option>
+                                                    <option value='unblock'>Unblock Record</option>
+                                            </select>
+                                        </div>                               
+                                    </div>
+                                </div>
+                                <div class="col-sm-3 col-md-3 col-lg-3">
+                                    <div class="form-group">
+                                        <div id="srid" class="input-group">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <input style="width:260px;" type="text" placeholder="Search By User Id" class="form-control" id="srcid">
+                                        </div>
+                                        <div id="srcnm" class="input-group hidden">
+                                            <span class="input-group-addon"><i class="ion-ios-search-strong"></i></span>
+                                            <input style="width:260px;" type="text" placeholder="Search By User Name" class="form-control" id="srcname">
+                                        </div>                               
+                                    </div>        
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-body" style="padding-bottom:0px;max-height:450px;min-height: 450px;">
+                            <div class="table-responsive">
+                                <table class="table table-striped" style="width: 100%;">
+                                    <thead>
+                                        <tr style="font-size:16px;background-color:rgba(0, 0, 0, 0.500);border-bottom:none;">
+                                            <th style='float: left;width: 7%;'>User Id</th>
+                                            <th style='float: left;width: 13%;'>User Name</th>
+                                            <th style='float: left;width: 8%;'>Gender</th>
+                                            <th style='float: left;width: 10%;'>Birth Date</th>
+                                            <th style='float: left;width: 10%;'>Mobile No.</th>
+                                            <th style='float: left;width: 19.5%;'>Email</th>
+                                            <th style='float: left;width: 12.3%;'>Password</th>
+                                            <th style='float: left;width: 20.2%;'><center>Action</center></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="data" style="height: 365px;overflow-y: auto;display:block;">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div id="myModalchange" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                    <div class="modal-dialog modal-md">
+                            <div class="modal-content">
+                                    <div class="modal-header">
+                                            <h4 align="center">Update Record</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        
+                                        <div id="st1" class="form-group">
+                                            <label style="margin-top: 7px;" for="fname" class="col-sm-4 col-sm-offset-1">Record No </label>
+                                            <div class="input-group col-sm-6 disabled">
+                                                <span class="input-group-addon"><i class="ion-person"></i></span>
+                                                <input type="text" value="" class="form-control" id="uno" disabled>
+                                            </div>
+                                        </div>
+            
+                                        <div id="ourname" class="form-group">
+                                            <label style="margin-top: 7px;" for="fname" class="col-sm-4 col-sm-offset-1">User Name </label>
+                                            <div class="input-group col-sm-6">
+                                                <span class="input-group-addon"><i class="ion-person"></i></span>
+                                                <input type="text" placeholder="Firstname Lastname" value="" class="form-control" id="urname">
+                                            </div>
+                                        </div>
+            
+                                        <div id="ogender" class="form-group">
+                                            <label style="margin-top: 7px;" for="gender" class="col-sm-4 col-sm-offset-1">Gender </label>
+                                            <div class="input-group col-sm-6">
+                                                <label class="radio-inline"><input type="radio" value="Male" id="male" name="gender">Male</label>
+                                                <label class="radio-inline"><input type="radio" value="Female" id="female" name="gender">Female</label>
+                                                <span id="errgend" style="color: #ff9999;position: absolute;margin-top: 6px;margin-left: 10px;"></span>
+                                            </div>
+                                        </div>
+            
+                                        <div id="obdate" class="form-group">
+                                            <label style="margin-top: 7px;" for="pass" class="col-sm-4 col-sm-offset-1">Birth Date </label>
+                                            <div class="input-group col-sm-6">
+                                                <span class="input-group-addon"><i style="font-size:10px" class="ion-calendar"></i></span>
+                                                <input type="text" placeholder="DD/MM/YYYY" value="" class="form-control" id="bdate" name="bdate">
+                                            </div>
+                                        </div>
+            
+                                        <div id="omno" class="form-group">
+                                            <label style="margin-top: 7px;" for="lname" class="col-sm-4 col-sm-offset-1">Mobile No </label>
+                                            <div class="input-group col-sm-6">
+                                                <span class="input-group-addon"><i class="ion-ipad"></i></span>
+                                                <input type="text" placeholder="Enter Mobile Number" value="" class="form-control" id="mno">
+                                            </div>
+                                        </div>
+            
+                                        <div id="ooemail" class="form-group">
+                                            <label style="margin-top: 7px;" for="lname" class="col-sm-4 col-sm-offset-1">Email </label>
+                                            <div class="input-group col-sm-6">
+                                                <span class="input-group-addon"><i class="ion-email"></i></span>
+                                                <input type="email" placeholder="Enter Valid Email" value="" class="form-control" id="oemail">
+                                            </div>
+                                        </div>
+            
+                                        <div id="opasswd" class="form-group">
+                                            <label style="margin-top: 7px;" for="pass" class="col-sm-4 col-sm-offset-1">Password </label>
+                                            <div class="input-group col-sm-6">
+                                                <span class="input-group-addon"><i class="ion-locked"></i></span>
+                                                <input type="password" placeholder="Enter Password" class="form-control" id="passwd">
+                                                <span class="input-group-addon"><a style="text-decoration:none;font-size:17px;color:#666666;" id="showpass" class="ion-eye-disabled"></a></span>
+                                            </div>
+                                        </div>
+            
+                                        <div id="ocpasswd" class="form-group">
+                                            <label style="margin-top: 7px;" for="pass" class="col-sm-4 col-sm-offset-1">Confirm Password </label>
+                                            <div class="input-group col-sm-6">
+                                                <span class="input-group-addon"><i class="ion-locked"></i></span>
+                                                <input type="password" placeholder="Re-enter Password" class="form-control" id="cpasswd">
+                                                <span class="input-group-addon"><a style="text-decoration:none;font-size:17px;color:#666666;" id="showcpass" class="ion-eye-disabled"></a></span>
+                                            </div>
+                                        </div>
+            
+                                        <div class="form-group">
+                                            <div class="input-group col-sm-6 col-sm-offset-5">
+                                                <input type="button" class="btn btn-primary btn-md" onclick="return validate()" style="width:100px;" value="Update">
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="modal-footer" style="padding:7px;">    
+                                        <button type="button" style="width:100px;" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+                                    </div>
+                            </div>
+                    </div>
+                </div>
+                <div id="myModalerr" class="modal fade" role="dialog" data-backdrop="static" data-keyboard="false">
+                        <div class="modal-dialog modal-sm" style="width:480px;">
+                            <div class="modal-content">
+                                <div class="modal-body alert alert-danger">
+                                    <span id="alert"><strong class="ion-alert-circled"></strong><span id="errmsg" style="width: 429px;display: inline-block;">  Email Or Password Does Not Matched!!</span></span>
+                                </div>
+                                <div class="modal-footer" style="padding:7px;">    
+                                    <button type="button" style="width:100px;" class="btn btn-danger" data-dismiss="modal"><b>Close</b></button>
+                                </div>
+                            </div>
+                        </div>
+                </div>
+                <div id="myModalup" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                                <div class="modal-body">
+                                    <div id="updeldiv"></div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="upsuccess" type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="myModaldel" class="modal fade" role="dialog">
+                    <div class="modal-dialog modal-md">
+                        <div class="modal-content">
+                                <div class="modal-body">
+                                    <div id="delrec">
+
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button id="delsucces" type="button" class="btn btn-success" data-dismiss="modal">Yes</button>
+                                    <button id="" type="button" class="btn btn-danger" data-dismiss="modal">No</button>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+                <hidden id="deloid" value=""></hidden>
+                <hidden id="delosts" value=""></hidden>
+            </div>
+        </form>
+    </div>
+</div>
+    <script src="./js/Navfooter.js"></script>
+</body>
+</html>
